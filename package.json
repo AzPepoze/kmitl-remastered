@@ -1,20 +1,22 @@
 {
 	"name": "kmitl-remastered",
+	"description": "Website customizer tool.",
 	"version": "0.0.1",
-	"type": "module",
+	"keywords": [
+		"kmitl-remastered"
+	],
+	"author": "AzPepoze",
+	"license": "MIT",
 	"scripts": {
-		"dev": "vite",
-		"build": "vite build",
-		"preview": "vite preview",
-		"check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
-		"release": "pnpm run build && mkdir -p release && cd dist && zip -r ../release/chrome.zip . && zip -r ../release/firefox.zip . && cd .."
+		"build": "node utils/builder-extension.js"
 	},
 	"devDependencies": {
-		"@sveltejs/vite-plugin-svelte": "^5.1.0",
-		"@tsconfig/svelte": "^5.0.4",
-		"svelte": "^5.34.7",
-		"svelte-check": "^4.2.2",
-		"typescript": "~5.8.3",
-		"vite": "^7.0.0"
+		"@types/chrome": "^0.0.268",
+		"@types/node": "^22.14.1",
+		"chokidar": "^4.0.3",
+		"esbuild": "^0.24.2",
+		"fs-extra": "^11.3.0",
+		"sass": "^1.86.3",
+		"typescript": "^5.8.3"
 	}
 }

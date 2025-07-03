@@ -1,0 +1,43 @@
+{
+	"manifest_version": 3,
+	"name": "kmitl-remastered",
+	"author": "AzPepoze",
+	"version": "0.0.0",
+	"description": "",
+	"homepage_url": "https://github.com/AzPepoze/kmitl-remastered",
+	"minimum_chrome_version": "88",
+	"icons": {
+		"128": "icon/128.png",
+		"64": "icon/64.png",
+		"32": "icon/32.png",
+		"16": "icon/16.png"
+	},
+	"options_page": "setting.html",
+	"web_accessible_resources": [
+		{
+			"resources": ["*"],
+			"matches": ["*://*kmitl.ac.th/*"]
+		}
+	],
+	"content_scripts": [
+		{
+			"matches": ["*://*kmitl.ac.th/*"],
+			"js": ["main.js"],
+			"css": ["style.css"],
+			"run_at": "document_start"
+		}
+	],
+
+	"background": {
+		"service_worker": "background.js",
+		"scripts": ["background.js"]
+	},
+	"commands": {},
+	"permissions": ["storage", "scripting"],
+	"host_permissions": ["*://*kmitl.ac.th/*"],
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "kmitl-remastered@AzPepoze"
+		}
+	}
+}

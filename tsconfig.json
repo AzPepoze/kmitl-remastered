@@ -1,7 +1,24 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+     "compilerOptions": {
+          "target": "es2022",
+          "module": "commonjs",
+          "strict": true,
+          "esModuleInterop": true,
+          "skipLibCheck": true,
+          "forceConsistentCasingInFileNames": true,
+          "outDir": "./dist",
+          "types": [
+               "chrome",
+               "node"
+          ],
+          "strictNullChecks": false,
+          "noImplicitAny": false
+     },
+     "include": [
+          "src/**/*",
+          "dist/background.js"
+     ],
+     "exclude": [
+          "node_modules"
+     ]
 }
