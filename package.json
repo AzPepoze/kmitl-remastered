@@ -1,7 +1,6 @@
 {
-	"name": "extension",
-	"private": true,
-	"version": "0.0.0",
+	"name": "kmitl-remastered",
+	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
