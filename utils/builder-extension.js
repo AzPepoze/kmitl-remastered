@@ -23,12 +23,14 @@ const paths = {
 		runTs: path.join(baseDir, "src/main/main.ts"),
 		styles: path.join(baseDir, "src/main/styles/main.scss"),
 	},
-	out: {
-		base: path.join(baseDir, "out"),
-		build: path.join(baseDir, "out/build"),
-		chromium: path.join(baseDir, "out/chromium"),
-		firefox: path.join(baseDir, "out/firefox"),
-		styles: path.join(baseDir, "out/build/styles"),
+	build: {
+		base: path.join(baseDir, "build"),
+		styles: path.join(baseDir, "build/styles"),
+	},
+	dist: {
+		base: path.join(baseDir, "dist"),
+		chromium: path.join(baseDir, "dist/chromium"),
+		firefox: path.join(baseDir, "dist/firefox"),
 	},
 	temp: {
 		base: path.join(baseDir, "temp"),
@@ -91,17 +93,18 @@ async function processDirectoryForFirefox(directory) {
 // Build Helpers
 //-------------------------------------------------------
 async function setupDirectories() {
-	fs.removeSync(paths.out.base);
+	fs.removeSync(paths.build.base);
+	fs.removeSync(paths.dist.base);
 	fs.removeSync(paths.temp.base);
 	fs.ensureDirSync(paths.temp.base);
-	fs.ensureDirSync(paths.out.build);
-	fs.ensureDirSync(paths.out.styles);
+	fs.ensureDirSync(paths.build.base);
+	fs.ensureDirSync(paths.build.styles);
 }
 
 async function buildStyles() {
 	try {
 		const result = sass.compile(paths.src.styles, { style: "compressed" });
-		await fs.writeFile(path.join(paths.out.styles, "main.css"), result.css);
+		await fs.writeFile(path.join(paths.build.styles, "main.css"), result.css);
 		console.log("Sass compiled successfully.");
 	} catch (error) {
 		console.error("Sass compilation failed:", error);
@@ -118,17 +121,17 @@ async function buildBundles() {
 	await esbuild.build({
 		...commonOptions,
 		entryPoints: [paths.src.runTs],
-		outfile: path.join(paths.out.build, "main.js"),
+		outfile: path.join(paths.build.base, "main.js"),
 	});
 }
 
 async function createDistributions() {
-	fs.copySync(paths.out.build, paths.out.chromium);
-	fs.copySync(paths.out.build, paths.out.firefox);
+	fs.copySync(paths.build.base, paths.dist.chromium);
+	fs.copySync(paths.build.base, paths.dist.firefox);
 	console.log("Copied build files to distribution folders.");
 
 	console.log("Applying Firefox-specific patches...");
-	await processDirectoryForFirefox(paths.out.firefox);
+	await processDirectoryForFirefox(paths.dist.firefox);
 	console.log("Firefox patching complete.");
 }
 
@@ -146,7 +149,7 @@ async function build() {
 	try {
 		setupDirectories();
 
-		fs.copySync(paths.src.extension, paths.out.build, {
+		fs.copySync(paths.src.extension, paths.build.base, {
 			filter: (src) => !path.basename(src).startsWith("External_Modules"),
 		});
 

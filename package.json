@@ -8,7 +8,7 @@
 	"author": "AzPepoze",
 	"license": "MIT",
 	"scripts": {
-		"build": "node utils/builder-extension.js"
+		"dev": "node utils/builder-extension.js"
 	},
 	"devDependencies": {
 		"@types/chrome": "^0.0.268",
